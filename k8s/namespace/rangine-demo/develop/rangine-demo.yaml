@@ -1,0 +1,64 @@
+kind: Deployment
+apiVersion: apps/v1 #可通过kubectl api-versions根据类型选择
+metadata:
+  name: rangine-demo
+  namespace: rangine-demo
+  labels:
+    app: angine-demo
+spec:
+  replicas: 2
+  strategy: #升级策略（默认为滚动升级，不需要修改）
+    rollingUpdate:
+      maxSurge: 1  #滚动升级中，容器副本的最大数量（默认值，可根据实际情况修改）
+      maxUnavailable: 1  #滚动升级中，容器副本停止的最大数量（默认值，可根据实际情况修改）
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: rangine-demo
+      release: rangine-demo
+  template:
+    metadata:
+      labels:
+        app: rangine-demo
+        release: rangine-demo
+    spec:
+      volumes:
+        - name: demo-config-vl
+          configMap:
+            name: rangine-demo-config
+            items:
+            - key: demo_config_properties
+              path: .demo.env #会在mountPath下生成.demo.env的文件，文件内容为demo_config_properties对应的内容
+      containers:
+        - name: rangine-demo
+          image: titrxw/rangine-demo
+          imagePullPolicy: Always
+          ports:
+            - containerPort:  80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100M
+          env:
+            - name: MY_CACHE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: rangine-demo-config
+                  key: demo_config_key_value
+            - name:  RANGINE_TEST_OPAQUE_SECRET_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rangine-demo-opaque-secret
+                  key: username
+            - name:  RANGINE_TEST_OPAQUE_SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rangine-demo-opaque-secret
+                  key: password
+          volumeMounts:
+            - name: demo-config-vl
+              mountPath: /home/www/w7-rangine-empty1/   ##注意路径
+      imagePullSecrets:
+        - name: rangine-demo-image-pull-secret
+      restartPolicy: Always
+      

@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  rangine-demo-service
+  namespace: rangine-demo
+spec:
+  selector:
+    app: rangine-demo
+  type:  LoadBalancer
+  ports:
+  - name:  tcp-8001-80
+    port:  8001
+    targetPort:  80
+    protocol: TCP

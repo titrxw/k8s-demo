@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rangine-demo-ingress
+  namespace: rangine-demo
+  labels:
+    name: rangine-demo-ingress
+spec:
+  rules:
+  - host: rangine.titrxw.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name:  rangine-demo-service
+            port: 
+              number: 8001

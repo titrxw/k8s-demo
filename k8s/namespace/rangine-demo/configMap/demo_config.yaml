@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rangine-demo-config
+  namespace: rangine-demo
+  labels:
+    app: rangine-demo-config
+data:
+  demo_config_key_value: rangine_config_map_key_value
+  demo_config_properties: |
+    AUTHOR = titrxw
+    ENV = DEBUG
