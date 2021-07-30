@@ -1,4 +1,4 @@
-FROM akeneo/fpm:latest
+FROM php:7.4-cli
 
 
 ADD  ./w7-rangine-empty/ /home/www/w7-rangine-empty/
