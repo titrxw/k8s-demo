@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  rangine-demo-fpm-service
+  namespace: rangine-demo
+spec:
+  selector:
+    app: rangine-demo-fpm #匹配Deployment 下的spec.template.metadata.labels.app
+  type:  LoadBalancer
+  ports:
+  - name:  tcp-8002-80
+    port:  8002
+    targetPort:  80
+    protocol: TCP

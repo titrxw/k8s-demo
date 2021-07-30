@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1 #可通过kubectl api-versions根据类型选择
 metadata:
-  name: rangine-demo
+  name: rangine-demo-fpm
   namespace: rangine-demo
 spec:
   replicas: 2
@@ -12,13 +12,13 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: rangine-demo #匹配已有的pod
-      release: rangine-demo
+      app: rangine-demo-fpm
+      release: rangine-demo-fpm
   template:
     metadata:
       labels:
-        app: rangine-demo
-        release: rangine-demo
+        app: rangine-demo-fpm
+        release: rangine-demo-fpm
     spec:
       volumes:
         - name: demo-config-vl
@@ -28,8 +28,8 @@ spec:
             - key: demo_config_properties
               path: .demo.env #会在mountPath下生成.demo.env的文件，文件内容为demo_config_properties对应的内容
       containers:
-        - name: rangine-demo
-          image: titrxw/rangine-demo
+        - name: rangine-demo-fpm
+          image: titrxw/rangine-fpm-demo
           imagePullPolicy: Always
           ports:
             - containerPort:  80
