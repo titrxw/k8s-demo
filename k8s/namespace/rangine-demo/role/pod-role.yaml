@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+#该类型角色只能用于授予对某一单一命名空间中资源的访问权限, 可指定namespace
+  namespace: rangine-demo
+  name: rangine-demo:pods-dev
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch

@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    rangine-demo/account-nickname: 任雄伟
+  labels:
+     rangine-demo/account: "titrxw"
+  name: rangine-demo-titrxw-cluster-role-bind
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: rangine-demo:cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: titrxw #创建好的用户名
