@@ -29,8 +29,8 @@ spec:
               path: .demo.env #会在mountPath下生成.demo.env的文件，文件内容为demo_config_properties对应的内容
       containers:
         - name: rangine-demo
-          image: titrxw/rangine-demo
-          imagePullPolicy: Always
+          image: titrxw/rangine-demo #在新功能发布时， 通过kubectl patch修改镜像名，保存后，development会自动触发pod更新
+          imagePullPolicy: Always #restartPolicy 适用于 Pod 中的所有容器。restartPolicy 仅针对同一节点上 kubelet 的容器重启动作。当 Pod 中的容器退出时，kubelet 会按指数回退 方式计算重启的延迟（10s、20s、40s、...），其最长延迟为 5 分钟。 一旦某容器执行了 10 分钟并且没有出现问题，kubelet 对该容器的重启回退计时器执行 重置操作
           livenessProbe: #存活探针
             failureThreshold: 1
             periodSeconds: 3
