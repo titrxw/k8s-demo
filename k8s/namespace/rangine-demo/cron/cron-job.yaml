@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob #理解为对job的管理
+metadata:
+  namespace: rangine-demo
+  name: rangine-cron-job
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: rangine-cron-job
+            image: titrxw/rangine-fpm-demo
+            args:
+            - bin/genert route:list
